@@ -1,0 +1,36 @@
+# Integración continua de esta misma app: en cada push o pull request
+# se instala, se revisa el código (lint) y se compila (build).
+# El despliegue continuo (CD) lo hace Vercel al detectar el push a main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint y build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Revisar el código (lint)
+        run: npm run lint
+
+      - name: Compilar (build)
+        run: npm run build

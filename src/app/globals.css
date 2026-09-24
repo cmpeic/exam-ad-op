@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07070d;
+  --color-surface: #0f0f1a;
+  --color-surface-2: #161625;
+  --color-surface-3: #1f1f34;
+  --color-line: #26263d;
+  --color-line-strong: #3a3a5c;
+  --color-ink: #ededf7;
+  --color-muted: #a6a6c2;
+  --color-faint: #71718f;
+  --color-primary: #a78bfa;
+  --color-primary-strong: #7c3aed;
+  --color-accent: #22d3ee;
+  --color-ok: #34d399;
+  --color-bad: #fb7185;
+  --color-warn: #fbbf24;
+
+  --animate-shake: shake 0.42s ease-in-out;
+  --animate-pop: pop 0.35s ease-out both;
+  --animate-fade-up: fade-up 0.35s ease-out both;
+  --animate-flow: flow 0.7s linear infinite;
+  --animate-glow: glow 1.6s ease-in-out infinite;
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-7px);
+    }
+    40% {
+      transform: translateX(7px);
+    }
+    60% {
+      transform: translateX(-4px);
+    }
+    80% {
+      transform: translateX(4px);
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(0.94);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes flow {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 0 12px;
+    }
+  }
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 45%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 7px color-mix(in oklab, currentColor 0%, transparent);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-chakra), var(--font-geist-sans), sans-serif;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--color-bg);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Brillo de fondo inspirado en las diapositivas (violeta + cian) */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 420px at 50% -180px, rgb(124 58 237 / 0.22), transparent 65%),
+    radial-gradient(520px 300px at 110% 10%, rgb(34 211 238 / 0.1), transparent 60%),
+    radial-gradient(520px 320px at -10% 85%, rgb(236 72 153 / 0.07), transparent 60%);
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #c4b5fd 0%, #a78bfa 35%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Conector animado de los diagramas de flujo */
+.flow-line {
+  background-image: repeating-linear-gradient(to bottom, currentColor 0 6px, transparent 6px 12px);
+  background-size: 100% 12px;
+}
+
+/* Tarjetas que se voltean */
+.flip {
+  perspective: 1400px;
+}
+.flip-inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  grid-area: 1 / 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+/* Foco visible en los segmentos del diagrama ∞ */
+.inf-seg:focus-visible .seg-stroke {
+  stroke-width: 34;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
