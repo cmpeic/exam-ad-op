@@ -36,8 +36,9 @@ Abre http://localhost:3000.
 
 - **CI** – `.github/workflows/ci.yml` (GitHub Actions, archivo YAML): en cada push o pull request instala
   dependencias, ejecuta `npm run lint` y `npm run build`.
-- **CD** – Vercel está conectado al repositorio: cada push a `main` se despliega automáticamente a producción
-  (despliegue continuo).
+- **CD** – La app está publicada en Vercel: **https://exam-ad-op.vercel.app** (`vercel deploy --prod`).
+  Para que cada push a `main` se despliegue solo (despliegue continuo), conecta el repositorio en
+  Vercel → proyecto `exam-ad-op` → Settings → Git. `vercel.json` fija el framework en Next.js.
 
 ## Estructura
 
